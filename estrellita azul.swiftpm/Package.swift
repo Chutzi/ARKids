@@ -17,6 +17,7 @@ let package = Package(
             name: "estrellita azul",
             targets: ["AppModule"],
             bundleIdentifier: "chuy1844441.estrellita-azul",
+            teamIdentifier: "M95724D9Z2",
             displayVersion: "1.0",
             bundleVersion: "1",
             appIcon: .placeholder(icon: .paper),
@@ -30,6 +31,9 @@ let package = Package(
                 .landscapeRight,
                 .landscapeLeft,
                 .portraitUpsideDown(.when(deviceFamilies: [.pad]))
+            ],
+            capabilities: [
+                .camera(purposeString: "Unknown Usage Description")
             ]
         )
     ],

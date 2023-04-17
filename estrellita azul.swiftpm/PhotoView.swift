@@ -15,6 +15,24 @@ struct PhotoView: View {
     @State private var modelConfirmedForPlacement: Model?
     
     private var models: [Model] = [Model(modelName: "nike"), Model(modelName: "biplane")]
+    /*
+    private var models: [Model] = {
+        let filemanager = FileManager.default
+        
+        guard let path = Bundle.main.resourcePath, let files = try? filemanager.contentsOfDirectory(atPath: path) else {
+            return []
+        }
+        var availableModels: [Model] = []
+        for file in files where
+            file.hasSuffix("usdz"){
+                let modelName = file.replacingOccurrences(of: ".usdz", with: "")
+                let model = Model(modelName: modelName)
+                
+                availableModels.append(model)
+        }
+        return availableModels
+    }()
+     */
     
     var body: some View {
         
@@ -81,17 +99,25 @@ struct ARViewContainer: UIViewRepresentable {
     @Binding var modelConfirmedForPlacement: Model?
         
     func makeUIView(context: Context) -> ARView {
-        let arView = ARView(frame: .zero)
+        let sceneView = ARView(frame: .zero)
         
-        let config = ARWorldTrackingConfiguration()
-        config.planeDetection = [.horizontal, .vertical]
-        config.environmentTexturing = .automatic
-        if ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh){
-            config.sceneReconstruction = .mesh
-        }
-        arView.session.run(config)
+        if ARWorldTrackingConfiguration.isSupported {
+                   
+                    let configuration = ARWorldTrackingConfiguration()
+                    configuration.planeDetection = ARWorldTrackingConfiguration.PlaneDetection.horizontal
+                    configuration.isLightEstimationEnabled = true
+
+                    sceneView.session.run(configuration, options: [ARSession.RunOptions.resetTracking, ARSession.RunOptions.removeExistingAnchors])
+            print("World")
+                } else {
+                    // WARNING HERE
+                    let configuration = AROrientationTrackingConfiguration()
+                    print("Orientation")
+                    
+                    sceneView.session.run(configuration)
+                }
             
-        return arView
+        return sceneView
             
     }
         
@@ -124,7 +150,7 @@ struct ModelPickerView: View{
         VStack{
             ScrollView(.horizontal, showsIndicators: false){
                 HStack(spacing: 30) {
-                    ForEach(0 ..< 2){
+                    ForEach(0 ..< self.models.count){
                         index in Button(action: {
                             print("\(self.models[index].modelName)")
                             self.selectedModel = self.models[index]

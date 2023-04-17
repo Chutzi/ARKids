@@ -19,7 +19,7 @@ class Model{
     init(modelName: String) {
         self.modelName = modelName
         self.image = UIImage(named: modelName)!
-        let filename = modelName+".usdz"
+        let filename = "Models/"+modelName+".usdz"
         self.cancellable = ModelEntity.loadModelAsync(named: filename)
             .sink(receiveCompletion: { loadCOmpletion in
                 print("Unable to load modelEntity for modelName ", self.modelName)
