@@ -2,12 +2,17 @@
 //  HomeView.swift
 //  estrellita azul
 //
-//  Created by Alumno on 13/04/23.
+//  Created by Chuy on 13/04/23.
 //
 
 import SwiftUI
 
 struct MenuView: View {
+    @State private var countTimer = 0
+    @State private var timerRunning = true
+    let timer = Timer.publish(every: 0, on: .main, in: .common).autoconnect()
+    
+    
     var body: some View {
         
         ZStack{
@@ -25,15 +30,21 @@ struct MenuView: View {
                             PhotoView()
                         } label: {
                             Image("camera").resizable()
-                                .frame(width: 60, height: 60)
+                                .frame(width: 60, height: 60, alignment: .center)
                             Text("Scan Photo")
+                                .onReceive(timer) {_ in
+                                    
+                                    timerRunning = false
+                                    
+                                }
                                 .font(.system(size:45, weight: .medium, design: .rounded))
                         }
                     }.padding(39)
-                        .frame(width: 650, height: 130)
+                        .frame(width: timerRunning ? 90 : 650, height: 130)
                         .foregroundColor(.white)
                         .background(Color("CyanLight"))
                         .cornerRadius(90)
+                        .animation(.linear(duration: 0.5))
                     
                     Button(action: {}) {
                         NavigationLink {
@@ -41,14 +52,16 @@ struct MenuView: View {
                         } label: {
                             Image("galery").resizable()
                                 .frame(width: 80, height: 80)
-                            Text("Galery")
+                            Text("Gallery")
+                            
                                 .font(.system(size:45, weight: .medium, design: .rounded))
                         }
                     }.padding(39)
-                        .frame(width: 650, height: 130)
+                        .frame(width: timerRunning ? 90 : 650, height: 130)
                         .foregroundColor(.white)
                         .background(Color("BlueLight"))
                         .cornerRadius(90)
+                        .animation(.linear(duration: 0.5))
                 }
                 
                 Spacer(minLength: 200)

@@ -22,6 +22,10 @@ struct ContentView: View {
     @State private var orientation = UIDeviceOrientation.unknown
     @State private var isTapped = false
     
+    @State private var countTimer = 0
+    @State private var timerRunning = true
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     var body: some View {
         NavigationView{
             ZStack {
@@ -38,28 +42,42 @@ struct ContentView: View {
                 VStack() {
                     Spacer()
                     Text("ARKids")
+                        
                         .font(.system(size:66, weight: .medium, design: .rounded))
                         .padding(1)
                         .foregroundColor(Color.white)
-                    Text("Draws is funny!")
+                    
+                    Text("AR is funny!")
                         .font(.system(size:33, weight: .medium, design: .rounded))
                         .foregroundColor(Color.white)
                         
                     Spacer()
-                    Button(action: {}) {
+                    
                         NavigationLink {
                             UseView()
                         } label: {
-                            Text("Start").font(.system(size:45, weight: .medium, design: .rounded))
+                            Text("Start")
+                                .onReceive(timer) {_ in
+                                    if countTimer > 0 && timerRunning{
+                                        countTimer -= 1
+                                    }else{
+                                        timerRunning = false
+                                    }
+                                    
+                                }
+                                .font(.system(size:45, weight: .medium, design: .rounded))
+                                .frame(width: timerRunning ? 20 : 250, height: timerRunning ? 20 : 80)
+                                .foregroundColor(timerRunning ? Color("BRose") : .white)
+                                .background(Color("BRose"))
+                                .cornerRadius(90)
+                                .shadow(radius: 10)
+                                .animation(.spring())
+                                .hoverEffect(.automatic)
+                                                                
                         }
-                    }.padding(39)
-                        .frame(width: 250, height: 80)
-                        .foregroundColor(.white)
-                        .background(Color("BRose"))
-                        .cornerRadius(90)
-                        .shadow(radius: 10)
+
                     Spacer()
-                        
+                    
                 }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
