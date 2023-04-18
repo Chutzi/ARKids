@@ -9,47 +9,54 @@ import SwiftUI
 import RealityKit
 import ARKit
 import UIKit
+import ModelIO
+import AVFoundation
+
+struct ARVariables{
+  static var arView: ARView!
+}
 
 struct PhotoView: View {
     @State private var isPlacemnetEnabled = false
     @State private var selectedModel: Model?
     @State private var modelConfirmedForPlacement: Model?
     
-    //private var models: [Model] = [Model(modelName: "nike"), Model(modelName: "biplane")]
-    
-    private var models: [Model] = {
-        let filemanager = FileManager.default
-        
-        guard let path = Bundle.main.resourcePath, let files = try? filemanager.contentsOfDirectory(atPath: path) else {
-            return []
-        }
-        
-        var availableModels: [Model] = []
-        for file in files where
-            file.hasSuffix("usdz"){
-                let modelName = file.replacingOccurrences(of: ".usdz", with: "")
-                let model = Model(modelName: modelName)
-                
-                availableModels.append(model)
-        }
-        return availableModels
-    }()
-     
+    private var models: [Model] = [Model(modelName: "nike"), Model(modelName: "biplane")]
+
+    @State private var capturedImage: UIImage?
     
     var body: some View {
         
         ZStack(alignment: .bottom) {
-            ARViewContainer(modelConfirmedForPlacement: self.$modelConfirmedForPlacement)
+            ARViewContainer()
             
-            if self.isPlacemnetEnabled{
-                PlacementButtonsView(isPlacementEnabled: self.$isPlacemnetEnabled, selectedModel: self.$selectedModel, modelConfirmedForPlacement: self.$modelConfirmedForPlacement)
-            } else{
-                ModelPickerView(isPlacementEnabled: self.$isPlacemnetEnabled, selectedModel: self.$selectedModel, models: self.models)
-            }
+            
+            Button {
+              
+              // Placeholder: take a snapshotç
+                ARVariables.arView.snapshot(saveToHDR: false) { (image) in
+                  
+                  // Compress the image
+                  let compressedImage = UIImage(data: (image?.pngData())!)
+                  // Save in the photo album
+                  UIImageWriteToSavedPhotosAlbum(compressedImage!, nil, nil, nil)
+                }
+              
+              } label: {
+                Image(systemName: "camera")
+                  .frame(width:60, height:60)
+                  .font(.title)
+                  .background(.white.opacity(0.75))
+                  .cornerRadius(30)
+                  .padding()
+              }
+                        
         }.edgesIgnoringSafeArea(.all)
             
     }
 }
+
+
 
 struct PlacementButtonsView: View{
     @Binding var isPlacementEnabled: Bool
@@ -98,16 +105,25 @@ struct PlacementButtonsView: View{
 }
 
 struct ARViewContainer: UIViewRepresentable {
-    @Binding var modelConfirmedForPlacement: Model?
+    
+    //https://betterprogramming.pub/take-an-arview-snapshot-in-realitykit-93b620cf99b3
+    
+    let sceneView = ARView(frame: .zero)
         
     func makeUIView(context: Context) -> ARView {
-        let sceneView = ARView(frame: .zero)
+        
         
         if ARWorldTrackingConfiguration.isSupported {
                    
-                    let configuration = ARWorldTrackingConfiguration()
-                    configuration.planeDetection = ARWorldTrackingConfiguration.PlaneDetection.horizontal
+            let configuration = ARWorldTrackingConfiguration()
+            configuration.planeDetection = ARWorldTrackingConfiguration.PlaneDetection.horizontal
                     configuration.isLightEstimationEnabled = true
+            
+            let arObject = ARObject()
+                let anchor = AnchorEntity()
+            anchor.addChild(arObject)
+            sceneView.scene.anchors.append(anchor)
+            
 
                     sceneView.session.run(configuration, options: [ARSession.RunOptions.resetTracking, ARSession.RunOptions.removeExistingAnchors])
             print("World")
@@ -124,56 +140,14 @@ struct ARViewContainer: UIViewRepresentable {
     }
         
     func updateUIView(_ uiView: ARView, context: Context) {
-        if let model = self.modelConfirmedForPlacement{
-            
-            if let modelEntity = model.modelEntity{
-                print("Debug > Adding model to scene > \(model.modelName)")
-                
-                let anchorEntity = AnchorEntity() //falta
-                anchorEntity.addChild(modelEntity.clone(recursive: true))
-                
-                uiView.scene.addAnchor(anchorEntity)
-            }else{
-                print("Debug > Unable to load modelEntity for > \(model.modelName)")
-            }
         
-            DispatchQueue.main.async {
-                self.modelConfirmedForPlacement = nil
-            }
-        }
     }
 }
 
 struct ModelPickerView: View{
-    @Binding var isPlacementEnabled: Bool
-    @Binding var selectedModel: Model?
-    
-    var models: [Model]
     
     var body: some View{
         VStack{
-            ScrollView(.horizontal, showsIndicators: false){
-                HStack(spacing: 30) {
-                    ForEach(0 ..< self.models.count){
-                        index in Button(action: {
-                            print("\(self.models[index].modelName)")
-                            
-                            self.selectedModel = self.models[index]
-                            self.isPlacementEnabled = true
-                        }){
-                            Image(uiImage: self.models[index].image)
-                                .resizable()
-                                .frame(height: 80)
-                                .aspectRatio(1/1,contentMode: .fit)
-                                .background(Color.white)
-                                .cornerRadius(12)
-                            
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }
-                }
-            }
-        .padding(20)
         
             HStack() {
                 Button {
@@ -202,3 +176,14 @@ struct PhotoView_Previews: PreviewProvider {
         PhotoView()
     }
 }
+
+
+
+
+
+
+
+
+
+
+
