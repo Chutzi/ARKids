@@ -31,7 +31,7 @@ struct MenuView: View {
                         } label: {
                             Image("camera").resizable()
                                 .frame(width: 60, height: 60, alignment: .center)
-                            Text("Scan Photo")
+                            Text("Camera")
                                 .onReceive(timer) {_ in
                                     
                                     timerRunning = false
@@ -42,7 +42,7 @@ struct MenuView: View {
                     }.padding(39)
                         .frame(width: timerRunning ? 90 : 650, height: 130)
                         .foregroundColor(.white)
-                        .background(Color("CyanLight"))
+                        .background(Color("Red1"))
                         .cornerRadius(90)
                         .animation(.linear(duration: 0.5))
                     
@@ -59,7 +59,7 @@ struct MenuView: View {
                     }.padding(39)
                         .frame(width: timerRunning ? 90 : 650, height: 130)
                         .foregroundColor(.white)
-                        .background(Color("BlueLight"))
+                        .background(Color("DarkYellow"))
                         .cornerRadius(90)
                         .animation(.linear(duration: 0.5))
                 }

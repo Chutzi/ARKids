@@ -3,4 +3,69 @@
    uuid = "D6C7AFA9-80CC-46F5-B207-4C001B112886"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "292DD292-EEDD-46FA-A88F-F824F90EC357"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PhotoView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "models"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "292DD292-EEDD-46FA-A88F-F824F90EC357 - e6181eec8100c77e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; Swift.Array&lt;estrellita_azul.Model&gt; in variable initialization expression of estrellita_azul.PhotoView.models : Swift.Array&lt;estrellita_azul.Model&gt;"
+                  moduleName = "estrellita azul"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user238402/Desktop/ARKids/estrellita%20azul.swiftpm/PhotoView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "324">
+               </Location>
+               <Location
+                  uuid = "292DD292-EEDD-46FA-A88F-F824F90EC357 - e6181eec8100c77e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; Swift.Array&lt;estrellita_azul.Model&gt; in variable initialization expression of estrellita_azul.PhotoView.models : Swift.Array&lt;estrellita_azul.Model&gt;"
+                  moduleName = "estrellita azul"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user238402/Desktop/ARKids/estrellita%20azul.swiftpm/PhotoView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "420">
+               </Location>
+               <Location
+                  uuid = "292DD292-EEDD-46FA-A88F-F824F90EC357 - e6181eec8100c77e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; Swift.Array&lt;estrellita_azul.Model&gt; in variable initialization expression of estrellita_azul.PhotoView.models : Swift.Array&lt;estrellita_azul.Model&gt;"
+                  moduleName = "estrellita azul"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user238402/Desktop/ARKids/estrellita%20azul.swiftpm/PhotoView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "1008">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

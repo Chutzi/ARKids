@@ -8,20 +8,22 @@
 import SwiftUI
 import RealityKit
 import ARKit
+import UIKit
 
 struct PhotoView: View {
     @State private var isPlacemnetEnabled = false
     @State private var selectedModel: Model?
     @State private var modelConfirmedForPlacement: Model?
     
-    private var models: [Model] = [Model(modelName: "nike"), Model(modelName: "biplane")]
-    /*
+    //private var models: [Model] = [Model(modelName: "nike"), Model(modelName: "biplane")]
+    
     private var models: [Model] = {
         let filemanager = FileManager.default
         
         guard let path = Bundle.main.resourcePath, let files = try? filemanager.contentsOfDirectory(atPath: path) else {
             return []
         }
+        
         var availableModels: [Model] = []
         for file in files where
             file.hasSuffix("usdz"){
@@ -32,7 +34,7 @@ struct PhotoView: View {
         }
         return availableModels
     }()
-     */
+     
     
     var body: some View {
         
@@ -44,7 +46,7 @@ struct PhotoView: View {
             } else{
                 ModelPickerView(isPlacementEnabled: self.$isPlacemnetEnabled, selectedModel: self.$selectedModel, models: self.models)
             }
-        }.background(Image("wallpaper").resizable().frame(width: 1750, height: 1300))
+        }.edgesIgnoringSafeArea(.all)
             
     }
 }
@@ -123,9 +125,11 @@ struct ARViewContainer: UIViewRepresentable {
         
     func updateUIView(_ uiView: ARView, context: Context) {
         if let model = self.modelConfirmedForPlacement{
-            if let modelEntity  = model.modelEntity{
+            
+            if let modelEntity = model.modelEntity{
                 print("Debug > Adding model to scene > \(model.modelName)")
-                let anchorEntity = AnchorEntity()
+                
+                let anchorEntity = AnchorEntity() //falta
                 anchorEntity.addChild(modelEntity.clone(recursive: true))
                 
                 uiView.scene.addAnchor(anchorEntity)
@@ -153,6 +157,7 @@ struct ModelPickerView: View{
                     ForEach(0 ..< self.models.count){
                         index in Button(action: {
                             print("\(self.models[index].modelName)")
+                            
                             self.selectedModel = self.models[index]
                             self.isPlacementEnabled = true
                         }){

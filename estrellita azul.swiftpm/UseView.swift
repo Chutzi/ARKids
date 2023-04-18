@@ -2,7 +2,7 @@
 //  UseView.swift
 //  estrellita azul
 //
-//  Created by Alumno on 13/04/23.
+//  Created by Chuy on 13/04/23.
 //
 
 import SwiftUI
@@ -17,12 +17,12 @@ struct UseView: View {
             VStack() {
                 Text("How to use").font(.largeTitle)
                     .bold()
-                    .padding(100)
+                    .padding(80)
                     .foregroundColor(Color.white)
                 
                 TabView{
                     
-                    OnBoardView(image: "Green", title: "Green example", description: "Texto mucho")
+                    OnBoardView(image: "biplane", title: "ARKids", description: "ARKids es una emocionante aplicación interactiva de realidad aumentada diseñada especialmente para niños menores de edad, en donde conoceran  un mundo mágico donde pueden tomar fotos y agregar objetos de realidad aumentada para crear imágenes únicas y divertidas.")
                     OnBoardView(image: "Green", title: "Green example", description: "Texto mucho")
                     OnBoardView(image: "Green", title: "Green example", description: "Texto mucho")
                     Button(action: {}) {
@@ -49,22 +49,17 @@ struct UseView: View {
                         .animation(.spring())
                     
                 }.tabViewStyle(.page(indexDisplayMode: .always))
-                //Text("ARKids es una emocionante aplicación interactiva de realidad aumentada diseñada especialmente para niños menores de edad. Con esta aplicación, los niños podrán sumergirse en un mundo mágico donde pueden tomar fotos y agregar objetos de realidad aumentada para crear imágenes únicas y divertidas.").font(.system(size:30, weight: .medium, design: .rounded)).foregroundColor(Color.white)
-                    
                 
                 Spacer()
-                
-                
-                
                 Spacer()
             }
             .lineSpacing(10)
             .frame(maxWidth: 900)
             .padding()
-        }.background(Image("wallpaper").resizable().frame(width: 1750, height: 1300))
+        }.background(Image("wallpaper").resizable().frame(width: 1750, height: 1300)).navigationBarBackButtonHidden()
         
         
-       
+        
     }
     
 }
@@ -82,13 +77,14 @@ struct OnBoardView: View {
                 Image(image)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 150, height: 150)
+                    .frame(width: 130, height: 130)
                     .foregroundColor(.white)
                 Text(title)
-                    .font(.system(size: 50)).bold()
+                    .font(.system(size: 40)).bold()
                     .foregroundColor(.white)
                 Text(description)
-                    .font(.system(size: 30))
+                    .font(.system(size: 25))
+                    
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white)
             }
@@ -97,7 +93,7 @@ struct OnBoardView: View {
         }.cornerRadius(90)
         
     }
-        
+    
     
 }
 
