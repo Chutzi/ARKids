@@ -15,16 +15,12 @@ struct UseView: View {
         ZStack{
             
             VStack() {
-                Text("How to use").font(.largeTitle)
-                    .bold()
-                    .padding(80)
-                    .foregroundColor(Color.white)
+                //Text("How to use").font(.largeTitle).bold().padding(80).foregroundColor(Color.white)
                 
                 TabView{
                     
-                    OnBoardView(image: "biplane", title: "ARKids", description: "ARKids es una emocionante aplicación interactiva de realidad aumentada diseñada especialmente para niños menores de edad, en donde conoceran  un mundo mágico donde pueden tomar fotos y agregar objetos de realidad aumentada para crear imágenes únicas y divertidas.")
-                    OnBoardView(image: "Green", title: "Green example", description: "Texto mucho")
-                    OnBoardView(image: "Green", title: "Green example", description: "Texto mucho")
+                    OnBoardView(image: "biplane", title: "ARKids", description: "ARKids is an exciting interactive augmented reality application designed for all kinds of people, especially for children, where they will discover a magical world where they can take augmented reality photos to create unique and fun images.")
+                    OnBoardMenuView(image: "camera", image2: "galery", title: "How to use", description: "There are two options on the menu to choose from: \n\nThe camera where you can take photos with augmented reality.", description2: "The gallery where you can see the photos you took")
                     Button(action: {}) {
                         NavigationLink {
                             MenuView()
@@ -86,6 +82,51 @@ struct OnBoardView: View {
                     .font(.system(size: 25))
                     
                     .multilineTextAlignment(.center)
+                    .foregroundColor(.white)
+            }
+            .padding(.horizontal, 200)
+            
+        }.cornerRadius(90)
+        
+    }
+    
+    
+}
+
+struct OnBoardMenuView: View {
+    let image: String
+    let image2: String
+    let title: String
+    let description: String
+    let description2: String
+    
+    var body: some View {
+        ZStack{
+            LinearGradient(gradient: Gradient(colors: [Color("DarkBlue"), Color("DarkPurple")]), startPoint: .top, endPoint: .trailing)
+            Color.clear
+            VStack(spacing: 20){
+                Text(title)
+                    .font(.system(size: 40)).bold()
+                    .foregroundColor(.white)
+                Text(description)
+                    .font(.system(size: 25))
+                    
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.white)
+                Image(image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
+                    .foregroundColor(.white)
+                Text(description2)
+                    .font(.system(size: 25))
+                    
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.white)
+                Image(image2)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 130, height: 130)
                     .foregroundColor(.white)
             }
             .padding(.horizontal, 200)

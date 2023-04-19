@@ -18,6 +18,25 @@ extension View {
     }
 }
 
+struct StrokeText: View {
+    let text: String
+    let width: CGFloat
+    let color: Color
+
+    var body: some View {
+        ZStack{
+            ZStack{
+                Text(text).offset(x:  width, y:  width)
+                Text(text).offset(x: -width, y: -width)
+                Text(text).offset(x: -width, y:  width)
+                Text(text).offset(x:  width, y: -width)
+            }
+            .foregroundColor(color)
+            Text(text)
+        }
+    }
+}
+
 struct ContentView: View {
     @State private var orientation = UIDeviceOrientation.unknown
     @State private var isTapped = false
@@ -41,11 +60,12 @@ struct ContentView: View {
                 
                 VStack() {
                     Spacer()
-                    Text("ARKids")
-                        
-                        .font(.system(size:66, weight: .medium, design: .rounded))
+                    StrokeText(text: "ARKids", width: 3, color: Color("purpleK"))
+                        .font(.system(size:75, weight: .medium, design: .rounded))
                         .padding(1)
                         .foregroundColor(Color.white)
+                        
+                        
                     
                     Text("AR is funny!")
                         .font(.system(size:33, weight: .medium, design: .rounded))

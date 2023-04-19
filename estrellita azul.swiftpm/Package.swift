@@ -8,19 +8,19 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "estrellita azul",
+    name: "ARKids",
     platforms: [
         .iOS("15.2")
     ],
     products: [
         .iOSApplication(
-            name: "estrellita azul",
+            name: "ARKids",
             targets: ["AppModule"],
             bundleIdentifier: "chuy1844441.estrellita-azul",
             teamIdentifier: "M95724D9Z2",
             displayVersion: "1.0",
             bundleVersion: "1",
-            appIcon: .placeholder(icon: .paper),
+            appIcon: .asset("AppIcon"),
             accentColor: .presetColor(.blue),
             supportedDeviceFamilies: [
                 .pad,
@@ -33,8 +33,10 @@ let package = Package(
                 .portraitUpsideDown(.when(deviceFamilies: [.pad]))
             ],
             capabilities: [
-                .camera(purposeString: "Unknown Usage Description")
-            ]
+                .camera(purposeString: "Unknown Usage Description"),
+                .photoLibrary(purposeString: "Unknown Usage Description")
+            ],
+            appCategory: .entertainment
         )
     ],
     targets: [
