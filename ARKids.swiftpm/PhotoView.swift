@@ -15,6 +15,10 @@ struct ARVariables{
 
 struct PhotoView: View {
     @State private var source = UIImagePickerController.SourceType.camera
+    @State private var take = false
+    @State private var countTimer = 0
+    @State private var timerRunning = false
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         
@@ -31,6 +35,7 @@ struct PhotoView: View {
                     let compressedImage = UIImage(data: (image?.pngData())!)
                       // Save in the photo album
                       UIImageWriteToSavedPhotosAlbum(compressedImage!, nil, nil, nil)
+                    take = true
                     
                 }
               
@@ -42,6 +47,31 @@ struct PhotoView: View {
                   .cornerRadius(30)
                   .padding()
               }
+            VStack{
+                if take{
+                    Text("Saved").onReceive(timer) {_ in
+                        if countTimer > 1 && timerRunning{
+                            countTimer -= 1
+                            timerRunning = true
+                        }else{
+                            timerRunning = false
+                            take = false
+                        }
+                        
+                    }
+                    .font(.system(size:45, weight: .medium, design: .rounded))
+                    .frame(width: timerRunning ? 20 : 250, height: timerRunning ? 20 : 80)
+                    .foregroundColor(timerRunning ? Color("BRose") : .white)
+                    .background(Color("BRose"))
+                    .cornerRadius(90)
+                    .shadow(radius: 10)
+                    .animation(.spring())
+                    .hoverEffect(.automatic)
+                    Spacer()
+                }
+                
+            }
+            
                         
         }.edgesIgnoringSafeArea(.all)
     }
